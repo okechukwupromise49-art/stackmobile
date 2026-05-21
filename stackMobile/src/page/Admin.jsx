@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Header } from "../component/Header";
 import axios from "axios";
 import API_URL from "../Api";
+import toast from "react-hot-toast";
 
 export function Admin() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,7 +21,7 @@ export function Admin() {
       setProducts(res.data.data || []);
     } catch (error) {
       console.error(error);
-      alert("Failed to fetch products");
+      toast.error("Failed to fetch products");
     } finally {
       setLoading(false);
     }
@@ -44,11 +45,11 @@ export function Admin() {
 
   const SubmitEvent = async () => {
     if (!name.trim()) {
-      alert("Please enter a name");
+      toast.error("Please enter a name");
       return;
     }
     if (!image) {
-      alert("Please select an image");
+      toast.error("Please select an image");
       return;
     }
 
@@ -67,7 +68,7 @@ export function Admin() {
       );
 
       console.log(res.data);
-      alert("Upload Successful!");
+      toast.success("Upload successful!");
 
       // Reset form
       setName("");
@@ -79,7 +80,7 @@ export function Admin() {
       fetchProducts();
     } catch (error) {
       console.error(error);
-      alert(error.response?.data?.message || "Upload failed");
+      toast.error(error.response?.data?.message || "Upload failed");
     } finally {
       setUploading(false);
     }
