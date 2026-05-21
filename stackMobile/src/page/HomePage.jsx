@@ -80,42 +80,58 @@ export  function HomePage() {
   <div className="px-4 sm:px-6 lg:px-12">
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
       {products.map((product) => (
-        <div
-          key={product._id}
-          className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col"
+  <div
+    key={product._id}
+    className="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-gray-200 flex flex-col h-full"
+  >
+    {/* Image Section */}
+    <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
+      <img
+        src={product.image}
+        alt={product.name}
+        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+      />
+
+      {/* Subtle gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+    </div>
+
+    {/* Content */}
+    <div className="p-6 flex-1 flex flex-col">
+      <h3 className="font-semibold text-lg text-gray-900 line-clamp-2 mb-4 min-h-[3.5rem]">
+        {product.name}
+      </h3>
+
+      {/* Optional: Price / Category */}
+      {product.price && (
+        <p className="text-2xl font-bold text-gray-900 mt-auto">
+          ₦{Number(product.price).toLocaleString()}
+        </p>
+      )}
+
+      {/* Action Button */}
+      <button
+        onClick={() => {
+          setIsProductOpen(true);
+          setSelectedProduct(product);
+        }}
+        className="mt-6 w-full bg-gray-900 hover:bg-black text-white py-3.5 rounded-2xl font-medium transition-all duration-200 active:scale-[0.985] flex items-center justify-center gap-2"
+      >
+        View Details
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-4 h-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={3}
         >
-          {/* Image */}
-          <div className="relative h-56 sm:h-60 overflow-hidden">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-            />
-
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-
-            <div className="absolute bottom-3 left-3">
-              <span className="text-white text-sm font-medium">
-                {product.name}
-              </span>
-            </div>
-          </div>
-
-          {/* Button */}
-          <div className="p-4 flex flex-col gap-3">
-            <button
-              onClick={() => {setIsProductOpen(true)
-                setSelectedProduct(product);
-              }
-              
-              }
-              className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold transition-colors"
-            >
-              View Details
-            </button>
-          </div>
-        </div>
-      ))}
+          <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  </div>
+))}
     </div>
   </div>
 )}

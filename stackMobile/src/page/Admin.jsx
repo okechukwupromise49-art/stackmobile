@@ -143,42 +143,65 @@ export function Admin() {
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-10">
 
       {products.map((product) => (
-        <div
-          key={product._id}
-          className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 overflow-hidden flex flex-col"
-        >
-
-          {/* IMAGE */}
-          <div className="relative h-56 overflow-hidden">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-            />
-
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-
-            <div className="absolute bottom-3 left-3">
-              <span className="text-white text-sm font-semibold">
-                {product.name}
-              </span>
-            </div>
-          </div>
-
-          {/* CONTENT */}
-          <div className="p-4 flex flex-col gap-3">
-
-            {/* DELETE BUTTON */}
-            <button
-              onClick={() => onDelete(product._id)}
-              className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl font-semibold transition-colors flex items-center justify-center gap-2"
-            >
-              🗑 Delete Product
-            </button>
-
-          </div>
+  <div
+    key={product._id}
+    className="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-gray-200 flex flex-col h-full"
+  >
+    {/* Image */}
+    <div className="relative aspect-square overflow-hidden bg-gray-100">
+      {product.image ? (
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+      ) : (
+        <div className="w-full h-full flex items-center justify-center text-gray-300">
+          <span className="text-6xl">📦</span>
         </div>
-      ))}
+      )}
+
+      {/* Optional badge / status */}
+      {/* <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium text-emerald-600">In Stock</div> */}
+    </div>
+
+    {/* Content */}
+    <div className="p-6 flex-1 flex flex-col">
+      <h3 className="font-semibold text-lg text-gray-900 line-clamp-2 mb-2">
+        {product.name}
+      </h3>
+
+      {/* Add more details as needed */}
+      {product.price && (
+        <p className="text-2xl font-bold text-gray-900 mt-auto">
+          ₦{product.price.toLocaleString()}
+        </p>
+      )}
+
+      {/* Delete Button - Modern & Professional */}
+      <button
+        onClick={() => onDelete(product._id)}
+        className="mt-6 flex items-center justify-center gap-2.5 w-full bg-white border border-red-200 hover:border-red-300 hover:bg-red-50 text-red-600 hover:text-red-700 py-3.5 rounded-2xl font-medium transition-all duration-200 active:scale-[0.985]"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-5 h-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2.5}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M19 7l-.595 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.595-1.858L5 7m5-4v6m4-6v6m1-10V9a1 1 0 00-1 1v1M12 4v6"
+          />
+        </svg>
+        Delete Product
+      </button>
+    </div>
+  </div>
+))}
 
     </div>
   </div>
