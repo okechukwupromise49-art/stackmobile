@@ -86,15 +86,16 @@ export function Admin() {
   };
   const onDelete = async (id) => {
   try {
-    await fetch(`${API_URL}/api/delete/${id}`, {
-      method: "DELETE",
-    });
-     window.location.reload();
+    await axios.delete(`${API_URL}/api/delete/${id}`);
+
+    setProducts((prevProducts) =>
+      prevProducts.filter((product) => product._id !== id)
+    );
+
   } catch (error) {
     console.error(error);
+    alert("Failed to delete product");
   }
-
-  
 };
   
 
