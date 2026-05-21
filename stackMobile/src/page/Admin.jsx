@@ -43,48 +43,61 @@ export function Admin() {
     }
   };
 
-  const SubmitEvent = async () => {
-    if (!name.trim()) {
-      toast.error("Please enter a name");
-      return;
-    }
-    if (!image) {
-      toast.error("Please select an image");
-      return;
-    }
+ const SubmitEvent = async () => {
+  if (!name.trim()) {
+    toast.error("Please enter a name");
+    return;
+  }
 
-    setUploading(true);
-    try {
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("image", image);
+  if (!image) {
+    toast.error("Please select an image");
+    return;
+  }
 
-      const res = await axios.post(
-        `${API_URL}/api/upload`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+  const loadingToast = toast.loading("Uploading product...");
 
-      console.log(res.data);
-      toast.success("Upload successful!");
+  setUploading(true);
 
-      // Reset form
-      setName("");
-      setImage(null);
-      setImagePreview(null);
-      setIsModalOpen(false);
+  try {
+    const formData = new FormData();
 
-      // Refresh products list
-      fetchProducts();
-    } catch (error) {
-      console.error(error);
-      toast.error(error.response?.data?.message || "Upload failed");
-    } finally {
-      setUploading(false);
-    }
-  };
+    formData.append("name", name);
+    formData.append("image", image);
+
+    await axios.post(
+      `${API_URL}/api/upload`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    toast.dismiss(loadingToast);
+
+    toast.success("Upload successful!");
+
+    setName("");
+    setImage(null);
+    setImagePreview(null);
+    setIsModalOpen(false);
+
+    fetchProducts();
+
+  } catch (error) {
+    console.error(error);
+
+    toast.dismiss(loadingToast);
+
+    toast.error(
+      error.response?.data?.message || "Upload failed"
+    );
+
+  } finally {
+    setUploading(false);
+  }
+};
   const onDelete = async (id) => {
   try {
     await axios.delete(`${API_URL}/api/delete/${id}`);
@@ -92,10 +105,11 @@ export function Admin() {
     setProducts((prevProducts) =>
       prevProducts.filter((product) => product._id !== id)
     );
+    toast.success("Product deleted");
 
   } catch (error) {
     console.error(error);
-    alert("Failed to delete product");
+    toast.error("Failed to delete product");
   }
 };
   
