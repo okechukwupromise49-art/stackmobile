@@ -13,7 +13,7 @@ const loginRoutes = require("./routes/login")
 const uploadRoutes = require("./routes/upload")
 
 app.use(cors({
-  origin: ["http://localhost:5173", "http://localhost:5174","https://inno-library.vercel.app", ],
+  origin: ["http://localhost:5173", "http://localhost:5174","https://stackmobile.vercel.app", ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true
 }));

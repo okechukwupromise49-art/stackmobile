@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
+import API_URL from "../Api";
 
 export  function Footer({ isModalOpen, setIsModalOpen }) {
     const navigate = useNavigate()
@@ -10,7 +11,7 @@ export  function Footer({ isModalOpen, setIsModalOpen }) {
 
     async function SubmitEvent() {
         try {
-            const res = await axios.post("http://localhost:3000/api/login", {
+            const res = await axios.post(`${API_URL}/api/login`, {
             password: value,
             })
             navigate('/admin')

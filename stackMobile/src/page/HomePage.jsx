@@ -3,6 +3,7 @@ import {Header} from "../component/Header";
 import {Footer} from "../component/Footer";
 import Logo from "../assets/Logo.jpg";
 import axios from "axios";
+import API_URL from "../Api";
 
 export  function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,7 +16,7 @@ export  function HomePage() {
   const fetchProducts = useCallback(async () => {
       setLoading(true);
       try {
-        const res = await axios.get("http://localhost:3000/api/details");
+        const res = await axios.get(`${API_URL}/api/details`);
         setProducts(res.data.data || []);
       } catch (error) {
         console.error(error);

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Header } from "../component/Header";
 import axios from "axios";
+import API_URL from "../Api";
 
 export function Admin() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,7 +16,7 @@ export function Admin() {
   const fetchProducts = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await axios.get("http://localhost:3000/api/details");
+      const res = await axios.get(`${API_URL}/api/details`);
       setProducts(res.data.data || []);
     } catch (error) {
       console.error(error);
@@ -58,7 +59,7 @@ export function Admin() {
       formData.append("image", image);
 
       const res = await axios.post(
-        "http://localhost:3000/api/upload",
+        `${API_URL}/api/upload`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -85,7 +86,7 @@ export function Admin() {
   };
   const onDelete = async (id) => {
   try {
-    await fetch(`http://localhost:3000/api/delete/${id}`, {
+    await fetch(`${API_URL}/api/delete/${id}`, {
       method: "DELETE",
     });
      window.location.reload();
