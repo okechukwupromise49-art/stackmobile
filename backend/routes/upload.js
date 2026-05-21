@@ -3,7 +3,7 @@ const router = express.Router();
 
 const fs = require("fs");
 
-const Upload = require("../models/Upload");
+const Upload = require("../models/upload");
 
 const upload = require("../middleware/upload");
 
