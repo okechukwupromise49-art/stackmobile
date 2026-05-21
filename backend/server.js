@@ -12,7 +12,11 @@ const app = express()
 const loginRoutes = require("./routes/login")
 const uploadRoutes = require("./routes/upload")
 
-app.use(cors())
+app.use(cors({
+  origin: ["http://localhost:5173", "http://localhost:5174","https://inno-library.vercel.app", ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true
+}));
 app.use(express.json())
 
 mongoose

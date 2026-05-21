@@ -7,7 +7,7 @@ const Upload = require("../models/upload");
 
 const upload = require("../middleware/upload");
 
-const { supabase } = require("../supaBase/supabaseClient.js")
+const { supabase } = require("../supabase/supabaseClient.js")
 
 router.post(
   "/upload",
